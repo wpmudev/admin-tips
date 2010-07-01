@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS `wp_tips` (
+  `tip_ID` bigint(20) unsigned NOT NULL auto_increment,
+  `tip_site_ID` int(20) NOT NULL default '0',
+  `tip_content` TEXT,
+  `tip_added` varchar(255),
+  PRIMARY KEY  (`tip_ID`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=43 ;
