@@ -184,7 +184,7 @@ function tips_manage_output() {
 		return;
 	}
 	if (isset($_GET['updated'])) {
-		?><div id="message" class="updated fade"><p><?php '' . urldecode($_GET['updatedmsg']) . '' ?></p></div><?php
+		?><div id="message" class="updated fade"><p><?php echo '' . urldecode($_GET['updatedmsg']) . '' ?></p></div><?php
 	}
 	echo '<div class="wrap">';
 	switch( $_GET[ 'action' ] ) {
