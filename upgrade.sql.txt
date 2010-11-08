@@ -1,0 +1,2 @@
+ALTER TABLE `wp_tips` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+ALTER TABLE `wp_tips` CHANGE `tip_content` `tip_content` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;

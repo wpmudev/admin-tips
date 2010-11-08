@@ -1,0 +1,123 @@
+# Translation of the WordPress plugin Tips 1.0.2 by Andrew Billits.
+# Copyright (C) 2010 Andrew Billits
+# This file is distributed under the same license as the Tips package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Tips 1.0.2\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/tips\n"
+"POT-Creation-Date: 2010-11-08 19:38+0530\n"
+"PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. #-#-#-#-#  tips.pot (Tips 1.0.2)  #-#-#-#-#
+#. Plugin Name of the plugin/theme
+#: tips.php:126 tips.php:160
+msgid "Tips"
+msgstr ""
+
+#: tips.php:163
+msgid "Show Tips"
+msgstr ""
+
+#: tips.php:166
+msgid "Yes"
+msgstr ""
+
+#: tips.php:167
+msgid "No"
+msgstr ""
+
+#: tips.php:183
+msgid "Nice Try..."
+msgstr ""
+
+#: tips.php:196
+msgid "Manage Tips"
+msgstr ""
+
+#: tips.php:196
+msgid "New"
+msgstr ""
+
+#: tips.php:200
+msgid "Click "
+msgstr ""
+
+#: tips.php:200
+msgid "here"
+msgstr ""
+
+#: tips.php:200
+msgid " to add a new tip."
+msgstr ""
+
+#: tips.php:208
+msgid "Content"
+msgstr ""
+
+#: tips.php:209
+msgid "Added"
+msgstr ""
+
+#: tips.php:210
+msgid "Actions"
+msgstr ""
+
+#: tips.php:222
+msgid "Edit"
+msgstr ""
+
+#: tips.php:223
+msgid "Remove"
+msgstr ""
+
+#: tips.php:237 tips.php:256
+msgid "New Tip"
+msgstr ""
+
+#: tips.php:241
+msgid "Tip:"
+msgstr ""
+
+#: tips.php:247 tips.php:266
+msgid "Save"
+msgstr ""
+
+#: tips.php:260 tips.php:288 tips.php:310
+msgid "Tip"
+msgstr ""
+
+#: tips.php:274
+msgid "Tip Added!"
+msgstr ""
+
+#: tips.php:283 tips.php:305
+msgid "Edit Tip"
+msgstr ""
+
+#: tips.php:294 tips.php:316
+msgid "Save Changes"
+msgstr ""
+
+#: tips.php:324
+msgid "Settings saved."
+msgstr ""
+
+#: tips.php:335
+msgid "Tip Removed."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Andrew Billits"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://incsub.com"
+msgstr ""
