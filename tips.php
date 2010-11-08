@@ -86,9 +86,9 @@ function tips_blog_install() {
 
 function tips_global_init() {
 	if (preg_match('/mu\-plugin/', PLUGINDIR) > 0) {
-		load_muplugin_textdomain(TIPS_LANG_DOMAIN, false, dirname(plugin_basename(__FILE__)).'/languages');
+		load_muplugin_textdomain(TIPS_LANG_DOMAIN, false, dirname(plugin_basename(__FILE__)).'/tips/languages');
 	} else {
-		load_plugin_textdomain(TIPS_LANG_DOMAIN, false, dirname(plugin_basename(__FILE__)).'/languages');
+		load_plugin_textdomain(TIPS_LANG_DOMAIN, false, dirname(plugin_basename(__FILE__)).'/tips/languages');
 	}
 }
 
