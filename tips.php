@@ -4,7 +4,7 @@ Plugin Name: Admin Panel Tips
 Plugin URI: http://premium.wpmudev.org/project/admin-panel-tips
 Description: Provide your users with helpful random tips (or promotions/news) in their admin panels.
 Author: Ivan Shaovchev & Andrew Billits (Incsub)
-Version: 1.0.3
+Version: 1.0.4
 Author URI: http://ivan.sh
 Network: true
 WDP ID: 61
@@ -41,12 +41,12 @@ if ( is_multisite() ) {
         add_action('admin_menu', 'tips_plug_pages');
     }
 } else {
-    $tips_menu_slug = 'settings.php';
-    $tips_admin_url = admin_url('options-general.php?page=wpmudev');
+    $tips_menu_slug = 'options-general.php';
+    $tips_admin_url = admin_url('options-general.php?page=manage-tips');
     add_action('admin_menu', 'tips_plug_pages');
 }
 
-$tips_current_version = '1.0.3';
+$tips_current_version = '1.0.4';
 $tmp_tips_prefix = "";
 $tmp_tips_suffix = "";
 
