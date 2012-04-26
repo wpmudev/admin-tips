@@ -3,6 +3,9 @@ Authors: Ivan Shaovchev, Andrew Billits (Incsub)
 
 == Changelog ==
 
+= 1.0.6 =
+* DB Upgrades not applying
+
 = 1.0.5 =
 * Unpublish tips instead of deleting them
 
