@@ -50,10 +50,12 @@ $tips_current_version = '1.0.5';
 $tmp_tips_prefix = "";
 $tmp_tips_suffix = "";
 
+register_activation_hook(__FILE__, 'tips_make_current');
+
 //check for activating
-if (isset($_GET['key']) && ($_GET['key'] == '' || $_GET['key'] === '')){
-	add_action('admin_head', 'tips_make_current');
-}
+//if (isset($_GET['key']) && ($_GET['key'] == '' || $_GET['key'] === '')){
+//    add_action('admin_head', 'tips_make_current');
+//}
 if (!isset($_GET['updated']) || ($_GET['updated'] != 'true' && $_GET['activated'] != 'true')){
     add_action('admin_notices', 'tips_output');
     add_action('network_admin_notices', 'tips_output');
@@ -119,8 +121,7 @@ function tips_global_install() {
 	if (get_site_option( "tips_installed" ) == "yes") {
 		if ( version_compare("1.0.4", get_site_option( "tips_version" )) >= 0) {
 		    $tips_table1 = "ALTER TABLE `" . $wpdb->base_prefix . "tips` ADD `tip_status` INT( 1 ) NOT NULL DEFAULT '1' AFTER `tip_added` ;";
-
-		$wpdb->query( $tips_table1 );
+		    $wpdb->query( $tips_table1 );
 		}
 	} else {
 		$tips_table1 = "CREATE TABLE IF NOT EXISTS `" . $wpdb->base_prefix . "tips` (
