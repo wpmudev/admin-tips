@@ -3,6 +3,9 @@ Authors: Ivan Shaovchev, Andrew Billits (Incsub)
 
 == Changelog ==
 
+= 1.0.7 =
+* Dismiss Tips
+
 = 1.0.6 =
 * DB Upgrades not applying
 

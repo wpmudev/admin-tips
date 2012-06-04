@@ -4,7 +4,7 @@ Plugin Name: Admin Panel Tips
 Plugin URI: http://premium.wpmudev.org/project/admin-panel-tips
 Description: Provide your users with helpful random tips (or promotions/news) in their admin panels.
 Author: Ivan Shaovchev & Andrew Billits (Incsub), S H Mohanjith (Incsub)
-Version: 1.0.6
+Version: 1.0.7
 Author URI: http://premium.wpmudev.org
 Network: true
 WDP ID: 61
@@ -46,7 +46,7 @@ if ( is_multisite() ) {
     add_action('admin_menu', 'tips_plug_pages');
 }
 
-$tips_current_version = '1.0.6';
+$tips_current_version = '1.0.7';
 $tmp_tips_prefix = "";
 $tmp_tips_suffix = "";
 
@@ -64,37 +64,60 @@ if (!isset($_GET['updated']) || ($_GET['updated'] != 'true' && $_GET['activated'
 add_action('init', 'tips_global_init');
 add_action('profile_personal_options', 'tips_profile_option_output');
 add_action('personal_options_update', 'tips_profile_option_update');
+add_action('wp_ajax_tips_dismiss', 'tips_dismiss');
+add_action('wp_ajax_tips_hide', 'tips_hide');
+add_action('admin_enqueue_scripts', 'tips_enqueue_scripts');
 
+function tips_dismiss() {
+    $tip_ids = isset($_COOKIE['tips_dismissed'])?maybe_unserialize(stripslashes($_COOKIE['tips_dismissed'])):array();
+    if (isset($_REQUEST['tid'])) {
+	$tip_ids[$_REQUEST['tid']] = $_REQUEST['tid'];
+    }
+    setcookie('tips_dismissed', serialize($tip_ids), time()+3600*24*365, admin_url('/'));
+    wp_safe_redirect(wp_get_referer());
+    exit();
+}
+
+function tips_hide() {
+    $tip_ids = isset($_COOKIE['tips_hide'])?$_COOKIE['tips_hide']:false;
+    setcookie('tips_hide', true, time()+3600*24*365, admin_url('/'));
+    wp_safe_redirect(wp_get_referer());
+    exit();
+}
+
+function tips_enqueue_scripts() {
+    wp_enqueue_script('jquery');
+}
 
 function tips_make_current() {
-	global $wpdb, $tips_current_version;
-	if (get_site_option( "tips_version" ) == '') {
-		add_site_option( 'tips_version', '0.0.0' );
-	}
-	tips_global_install();
-	if (get_site_option( "tips_version" ) == $tips_current_version) {
-		// do nothing
-	} else {
-		//update to current version
-		// update_site_option( "tips_installed", "no" );
-		update_site_option( "tips_version", $tips_current_version );
-	}
-	//--------------------------------------------------//
-	if (get_option( "tips_version" ) == '') {
-		add_option( 'tips_version', '0.0.0' );
-	}
-	
-	if (get_option( "tips_version" ) == $tips_current_version) {
-		// do nothing
-	} else {
-		//update to current version
-		update_option( "tips_version", $tips_current_version );
-		tips_blog_install();
-	}
+    global $wpdb, $tips_current_version;
+    if (get_site_option( "tips_version" ) == '') {
+    	add_site_option( 'tips_version', '0.0.0' );
+    }
+    tips_global_install();
+    if (get_site_option( "tips_version" ) == $tips_current_version) {
+    	// do nothing
+    } else {
+    	//update to current version
+    	// update_site_option( "tips_installed", "no" );
+    	update_site_option( "tips_version", $tips_current_version );
+    }
+    //--------------------------------------------------//
+    if (get_option( "tips_version" ) == '') {
+    	add_option( 'tips_version', '0.0.0' );
+    }
+    
+    if (get_option( "tips_version" ) == $tips_current_version) {
+    	// do nothing
+    } else {
+    	//update to current version
+    	update_option( "tips_version", $tips_current_version );
+    	tips_blog_install();
+    }
 }
 
 function tips_blog_install() {
-	global $wpdb, $tips_current_version;
+    global $wpdb, $tips_current_version;
 }
 
 function tips_global_init() {
@@ -159,13 +182,51 @@ function tips_profile_option_update() {
 function tips_output() {
 	global $wpdb, $current_site, $tmp_tips_prefix, $tmp_tips_suffix, $user_ID;
 	$show_tips = get_user_meta($user_ID,'show_tips');
-	if ( $show_tips != 'no' ) {
-		$tmp_tips_count = $wpdb->get_var("SELECT COUNT(*) FROM " . $wpdb->base_prefix . "tips WHERE tip_site_ID = '" . $current_site->id . "'");
+	if ( $show_tips != 'no' && !isset($_COOKIE['tips_hide'])) {
+		$dismissed_tips = isset($_COOKIE['tips_dismissed_106'])?maybe_unserialize(stripslashes($_COOKIE['tips_dismissed_106'])):array();
+		if (count($dismissed_tips) > 0) {
+		    $dismissed_tips_sql = "AND tip_ID NOT IN(" . join(',', $dismissed_tips) . ")";
+		} else {
+		    $dismissed_tips_sql = "";
+		}
+		$tmp_tips_count = $wpdb->get_var("SELECT COUNT(*) FROM " . $wpdb->base_prefix . "tips WHERE tip_site_ID = '" . $current_site->id . "' AND tip_status = 1 {$dismissed_tips_sql} ");
 		if ($tmp_tips_count > 0){
-			$tmp_tip_content = $wpdb->get_var("SELECT tip_content FROM " . $wpdb->base_prefix . "tips WHERE tip_site_ID = '" . $current_site->id . "' ORDER BY RAND() LIMIT 1");
-			$tmp_tip_content = $tmp_tips_prefix . $tmp_tip_content . $tmp_tips_suffix;
+			$tmp_tip = $wpdb->get_row("SELECT tip_ID, tip_content FROM " . $wpdb->base_prefix . "tips WHERE tip_site_ID = '" . $current_site->id . "' AND tip_status = 1 {$dismissed_tips_sql} ORDER BY RAND() LIMIT 1");
+			$tmp_tip_content = $tmp_tips_prefix . $tmp_tip->tip_content . $tmp_tips_suffix;
 			?>
-			<div id="message" class="updated"><p><?php echo $tmp_tip_content; ?></p></div>
+			<div id="message" class="updated admin-panel-tips"><p class="apt-dismiss">[ <a href="<?php echo admin_url('admin-ajax.php'); ?>?action=tips_dismiss&tid=<?php echo $tmp_tip->tip_ID; ?>" ><?php _e('Dismiss', TIPS_LANG_DOMAIN); ?></a> ]</p> <p class="apt-hide">[ <a href="<?php echo admin_url('admin-ajax.php'); ?>?action=tips_hide&tid=<?php echo $tmp_tip->tip_ID; ?>" ><?php _e('Hide', TIPS_LANG_DOMAIN); ?></a> ]</p> <p class="apt-content"><?php echo $tmp_tip_content; ?></p></div>
+			<style type="text/css">
+			    .apt-dismiss, .apt-hide {
+				float: right;
+				font-size: 0.9em;
+			    }
+			</style>
+			<script type="text/javascript">
+			    jQuery(document).ready(function () {
+			        jQuery('p.apt-dismiss a').click(function () {
+				    var tips_dismiss_data = {
+					action: 'tips_dismiss',
+					tid: <?php echo $tmp_tip->tip_ID; ?>
+				    };
+				    jQuery('#message.admin-panel-tips p.apt-dismiss').html('<?php _e('Saving...', TIPS_LANG_DOMAIN); ?>');
+				    jQuery.post(ajaxurl, tips_dismiss_data, function(response) {
+					jQuery('#message.admin-panel-tips').hide();
+				    });
+				    return false;
+				});
+				jQuery('p.apt-hide a').click(function () {
+				    var tips_dismiss_data = {
+					action: 'tips_hide',
+					tid: <?php echo $tmp_tip->tip_ID; ?>
+				    };
+				    jQuery('#message.admin-panel-tips p.apt-hide').html('<?php _e('Saving...', TIPS_LANG_DOMAIN); ?>');
+				    jQuery.post(ajaxurl, tips_dismiss_data, function(response) {
+					jQuery('#message.admin-panel-tips').hide();
+				    });
+				    return false;
+				});
+			    });
+			</script>
 			<?php
 		}
 	}
