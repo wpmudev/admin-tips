@@ -3,7 +3,7 @@ Authors: Ivan Shaovchev, Andrew Billits (Incsub)
 
 == Changelog ==
 
-= 1.0.8 =
+= 1.0.7.1 =
 * Update SQL
 
 = 1.0.7 =
