@@ -4,7 +4,7 @@ Plugin Name: Admin Panel Tips
 Plugin URI: http://premium.wpmudev.org/project/admin-panel-tips
 Description: Provide your users with helpful random tips (or promotions/news) in their admin panels.
 Author: Ivan Shaovchev & Andrew Billits (Incsub), S H Mohanjith (Incsub)
-Version: 1.0.7.1
+Version: 1.0.7.2
 Author URI: http://premium.wpmudev.org
 Network: true
 WDP ID: 61
@@ -46,7 +46,7 @@ if ( is_multisite() ) {
     add_action('admin_menu', 'tips_plug_pages');
 }
 
-$tips_current_version = '1.0.7.1';
+$tips_current_version = '1.0.7.2';
 $tmp_tips_prefix = "";
 $tmp_tips_suffix = "";
 
@@ -56,7 +56,7 @@ register_activation_hook(__FILE__, 'tips_make_current');
 //if (isset($_GET['key']) && ($_GET['key'] == '' || $_GET['key'] === '')){
 //    add_action('admin_head', 'tips_make_current');
 //}
-if (!isset($_GET['updated']) || ($_GET['updated'] != 'true' && $_GET['activated'] != 'true')){
+if (!isset($_GET['updated']) || !isset($_GET['activated']) || ($_GET['updated'] != 'true' && $_GET['activated'] != 'true')){
     add_action('admin_notices', 'tips_output');
     add_action('network_admin_notices', 'tips_output');
 }
@@ -171,7 +171,7 @@ function tips_plug_pages() {
 function tips_profile_option_update() {
 	global $user_id;
 	if ( $_POST['show_tips'] != '' ) {
-		update_usermeta($user_id,'show_tips',$_POST['show_tips']);
+		update_user_meta($user_id, 'show_tips', $_POST['show_tips']);
 	}
 }
 
@@ -180,8 +180,8 @@ function tips_profile_option_update() {
 //------------------------------------------------------------------------//
 
 function tips_output() {
-	global $wpdb, $current_site, $tmp_tips_prefix, $tmp_tips_suffix, $user_ID;
-	$show_tips = get_user_meta($user_ID,'show_tips');
+	global $wpdb, $current_site, $tmp_tips_prefix, $tmp_tips_suffix, $user_id;
+	$show_tips = get_user_meta($user_id,'show_tips', true);
 	if ( $show_tips != 'no' && !isset($_COOKIE['tips_hide'])) {
 		$dismissed_tips = isset($_COOKIE['tips_dismissed_106'])?maybe_unserialize(stripslashes($_COOKIE['tips_dismissed_106'])):array();
 		if (count($dismissed_tips) > 0) {
@@ -234,7 +234,7 @@ function tips_output() {
 
 function tips_profile_option_output() {
 	global $user_id;
-	$show_tips = get_usermeta($user_id,'show_tips');
+	$show_tips = get_user_meta($user_id,'show_tips', true);
 	?>
 	<h3><?php _e('Tips', TIPS_LANG_DOMAIN) ?></h3>
 	<table class="form-table">
