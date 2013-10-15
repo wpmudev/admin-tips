@@ -1,123 +1,181 @@
-# Translation of the WordPress plugin Tips 1.0.2 by Andrew Billits.
-# Copyright (C) 2010 Andrew Billits
-# This file is distributed under the same license as the Tips package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
-#
-#, fuzzy
+# Copyright (C) 2013 Admin Panel Tips
+# This file is distributed under the same license as the Admin Panel Tips package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Tips 1.0.2\n"
+"Project-Id-Version: Admin Panel Tips 1.0.7.2\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/tips\n"
-"POT-Creation-Date: 2010-11-08 19:38+0530\n"
-"PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2013-10-14 20:37:44+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2013-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
 
-#. #-#-#-#-#  tips.pot (Tips 1.0.2)  #-#-#-#-#
-#. Plugin Name of the plugin/theme
-#: tips.php:126 tips.php:160
+#: tips.php:167 tips.php:239
 msgid "Tips"
 msgstr ""
 
-#: tips.php:163
+#: tips.php:197
+msgid "Dismiss"
+msgstr ""
+
+#: tips.php:197
+msgid "Hide"
+msgstr ""
+
+#: tips.php:211 tips.php:222
+msgid "Saving..."
+msgstr ""
+
+#: tips.php:242
 msgid "Show Tips"
 msgstr ""
 
-#: tips.php:166
+#: tips.php:245
 msgid "Yes"
 msgstr ""
 
-#: tips.php:167
+#: tips.php:246
 msgid "No"
 msgstr ""
 
-#: tips.php:183
+#: tips.php:262
 msgid "Nice Try..."
 msgstr ""
 
-#: tips.php:196
+#: tips.php:278
 msgid "Manage Tips"
 msgstr ""
 
-#: tips.php:196
+#: tips.php:278
 msgid "New"
 msgstr ""
 
-#: tips.php:200
+#: tips.php:282
 msgid "Click "
 msgstr ""
 
-#: tips.php:200
+#: tips.php:282
 msgid "here"
 msgstr ""
 
-#: tips.php:200
+#: tips.php:282
 msgid " to add a new tip."
 msgstr ""
 
-#: tips.php:208
+#: tips.php:290
 msgid "Content"
 msgstr ""
 
-#: tips.php:209
+#: tips.php:291
 msgid "Added"
 msgstr ""
 
-#: tips.php:210
+#: tips.php:292 tips.php:338 tips.php:363 tips.php:397
+msgid "Status"
+msgstr ""
+
+#: tips.php:293
 msgid "Actions"
 msgstr ""
 
-#: tips.php:222
+#: tips.php:307 tips.php:339 tips.php:364 tips.php:398
+msgid "Published"
+msgstr ""
+
+#: tips.php:307 tips.php:340 tips.php:365 tips.php:399
+msgid "Draft"
+msgstr ""
+
+#: tips.php:308
 msgid "Edit"
 msgstr ""
 
-#: tips.php:223
+#: tips.php:309
 msgid "Remove"
 msgstr ""
 
-#: tips.php:237 tips.php:256
+#: tips.php:311
+msgid "Un-publish"
+msgstr ""
+
+#: tips.php:313
+msgid "Publish"
+msgstr ""
+
+#: tips.php:329 tips.php:354
 msgid "New Tip"
 msgstr ""
 
-#: tips.php:241
+#: tips.php:333
 msgid "Tip:"
 msgstr ""
 
-#: tips.php:247 tips.php:266
+#: tips.php:345 tips.php:370
 msgid "Save"
 msgstr ""
 
-#: tips.php:260 tips.php:288 tips.php:310
+#: tips.php:358 tips.php:392 tips.php:420
 msgid "Tip"
 msgstr ""
 
-#: tips.php:274
+#: tips.php:378
 msgid "Tip Added!"
 msgstr ""
 
-#: tips.php:283 tips.php:305
+#: tips.php:387 tips.php:415
 msgid "Edit Tip"
 msgstr ""
 
-#: tips.php:294 tips.php:316
+#: tips.php:404 tips.php:426
 msgid "Save Changes"
 msgstr ""
 
-#: tips.php:324
+#: tips.php:434
 msgid "Settings saved."
 msgstr ""
 
-#: tips.php:335
+#: tips.php:444
+msgid "Tip Un-published."
+msgstr ""
+
+#: tips.php:452
+msgid "Tip Published."
+msgstr ""
+
+#: tips.php:461
 msgid "Tip Removed."
 msgstr ""
 
+#: tips.php:476
+msgid ""
+"Please install the latest version of <a href=\"http://premium.wpmudev.org/"
+"project/update-notifications/\" title=\"Download Now &raquo;\">our free "
+"Update Notifications plugin</a> which helps you stay up-to-date with the "
+"most stable, secure versions of WPMU DEV themes and plugins. <a href="
+"\"http://premium.wpmudev.org/wpmu-dev/update-notifications-plugin-"
+"information/\">More information &raquo;</a>"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Admin Panel Tips"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://premium.wpmudev.org/project/admin-panel-tips"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Provide your users with helpful random tips (or promotions/news) in their "
+"admin panels."
+msgstr ""
+
 #. Author of the plugin/theme
-msgid "Andrew Billits"
+msgid "Ivan Shaovchev & Andrew Billits (Incsub), S H Mohanjith (Incsub)"
 msgstr ""
 
 #. Author URI of the plugin/theme
-msgid "http://incsub.com"
+msgid "http://premium.wpmudev.org"
 msgstr ""
