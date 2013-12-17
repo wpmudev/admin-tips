@@ -471,6 +471,6 @@ function tips_manage_output() {
  * Update Notifications Notice
  */
 global $wpmudev_notices;
-$wpmudev_notices[] = array( 'id'=> 61, 'name'=> 'Admin Panel Tips', 'screens' => array( 'toplevel_page_messaging', 'inbox_page_messaging_new', 'inbox_page_messaging_sent', 'inbox_page_messaging_message-notifications' ) );
+$wpmudev_notices[] = array( 'id'=> 61, 'name'=> 'Admin Panel Tips', 'screens' => array( 'settings_page_manage-tips-network' ) );
 include_once(plugin_dir_path( __FILE__ ).'external/dash-notice/wpmudev-dash-notification.php');
 
