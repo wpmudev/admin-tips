@@ -342,7 +342,7 @@ function tips_manage_output() {
                     </tr>
                 </table>
             <p class="submit"> 
-            <input type="submit" name="Submit" value="<?php _e('Save', TIPS_LANG_DOMAIN) ?>" /> 
+            <input class="button button-primary" type="submit" name="Submit" value="<?php _e('Save', TIPS_LANG_DOMAIN) ?>" /> 
             </p> 
             </form>
         <?php
@@ -367,7 +367,7 @@ function tips_manage_output() {
                     </tr>
                     </table>
                 <p class="submit"> 
-                <input type="submit" name="Submit" value="<?php _e('Save', TIPS_LANG_DOMAIN) ?>" /> 
+                <input class="button button-primary" type="submit" name="Submit" value="<?php _e('Save', TIPS_LANG_DOMAIN) ?>" /> 
                 </p> 
                 </form>
 				<?php
@@ -401,7 +401,7 @@ function tips_manage_output() {
                     </tr>
                 </table>
             <p class="submit"> 
-            <input type="submit" name="Submit" value="<?php _e('Save Changes', TIPS_LANG_DOMAIN) ?>" /> 
+            <input class="button button-primary" type="submit" name="Submit" value="<?php _e('Save Changes', TIPS_LANG_DOMAIN) ?>" /> 
             </p> 
             </form>
 	        <?php
@@ -423,7 +423,7 @@ function tips_manage_output() {
 						</tr>
 						</table>
 					<p class="submit"> 
-					<input type="submit" name="Submit" value="<?php _e('Save Changes', TIPS_LANG_DOMAIN) ?>" /> 
+					<input class="button button-primary" type="submit" name="Submit" value="<?php _e('Save Changes', TIPS_LANG_DOMAIN) ?>" /> 
 					</p> 
 					</form>
 					<?php
@@ -472,5 +472,5 @@ function tips_manage_output() {
  */
 global $wpmudev_notices;
 $wpmudev_notices[] = array( 'id'=> 61, 'name'=> 'Admin Panel Tips', 'screens' => array( 'toplevel_page_messaging', 'inbox_page_messaging_new', 'inbox_page_messaging_sent', 'inbox_page_messaging_message-notifications' ) );
-include_once(plugin_dir_path( __FILE__ ).'lib/dash-notices/wpmudev-dash-notification.php');
+include_once(plugin_dir_path( __FILE__ ).'external/dash-notice/wpmudev-dash-notification.php');
 
