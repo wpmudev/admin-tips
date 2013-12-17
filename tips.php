@@ -4,14 +4,14 @@ Plugin Name: Admin Panel Tips
 Plugin URI: http://premium.wpmudev.org/project/admin-panel-tips
 Description: Provide your users with helpful random tips (or promotions/news) in their admin panels.
 Author: Ivan Shaovchev & Andrew Billits (Incsub), S H Mohanjith (Incsub)
-Version: 1.0.7.2
+Version: 1.0.7.3
 Author URI: http://premium.wpmudev.org
 Network: true
 WDP ID: 61
 */
 
 /* 
-Copyright 2007-2011 Incsub (http://incsub.com)
+Copyright 2007-2013 Incsub (http://incsub.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License (Version 2 - GPLv2) as published by
@@ -183,7 +183,7 @@ function tips_output() {
 	global $wpdb, $current_site, $tmp_tips_prefix, $tmp_tips_suffix, $user_id;
 	$show_tips = get_user_meta($user_id,'show_tips', true);
 	if ( $show_tips != 'no' && !isset($_COOKIE['tips_hide'])) {
-		$dismissed_tips = isset($_COOKIE['tips_dismissed_106'])?maybe_unserialize(stripslashes($_COOKIE['tips_dismissed_106'])):array();
+		$dismissed_tips = isset($_COOKIE['tips_dismissed'])?maybe_unserialize(stripslashes($_COOKIE['tips_dismissed'])):array();
 		if (count($dismissed_tips) > 0) {
 		    $dismissed_tips_sql = "AND tip_ID NOT IN(" . join(',', $dismissed_tips) . ")";
 		} else {
@@ -303,7 +303,7 @@ function tips_manage_output() {
 				//=========================================================//
 				echo "<tr class='" . $class . "'>";
 				echo "<td valign='top'>" . $tmp_tip['tip_content'] . "</td>";
-				echo "<td valign='top'>" . date(get_option('date_format') . ' ' . get_option('time_format'),$tmp_tip['tip_added']) . "</td>";
+				echo "<td valign='top'>" . date_i18n(get_option('date_format') . ' ' . get_option('time_format'), $tmp_tip['tip_added']) . "</td>";
 				echo "<td valign='top'>" . (($tmp_tip['tip_status'] == 1)?__('Published', TIPS_LANG_DOMAIN):__('Draft', TIPS_LANG_DOMAIN)) . "</td>";
 				echo '<td valign="top"><a href=' . $tips_admin_url . '&action=edit_tip&tid=' . $tmp_tip['tip_ID'] . " rel='permalink' class='edit'>" . __('Edit', TIPS_LANG_DOMAIN) . "</a></td>";
 				echo '<td valign="top"><a href=' . $tips_admin_url . '&action=delete_tip&tid=' . $tmp_tip['tip_ID'] . " rel='permalink' class='delete'>" . __('Remove', TIPS_LANG_DOMAIN) . "</a></td>";
@@ -470,11 +470,7 @@ function tips_manage_output() {
 /*
  * Update Notifications Notice
  */
-if ( !function_exists( 'wdp_un_check' ) ):
-function wdp_un_check() {
-    if ( !class_exists('WPMUDEV_Update_Notifications') && current_user_can('edit_users') )
-        echo '<div class="error fade"><p>' . __('Please install the latest version of <a href="http://premium.wpmudev.org/project/update-notifications/" title="Download Now &raquo;">our free Update Notifications plugin</a> which helps you stay up-to-date with the most stable, secure versions of WPMU DEV themes and plugins. <a href="http://premium.wpmudev.org/wpmu-dev/update-notifications-plugin-information/">More information &raquo;</a>', 'wpmudev') . '</a></p></div>';
-}
-add_action( 'admin_notices', 'wdp_un_check', 5 );
-add_action( 'network_admin_notices', 'wdp_un_check', 5 );
-endif; 
+global $wpmudev_notices;
+$wpmudev_notices[] = array( 'id'=> 61, 'name'=> 'Admin Panel Tips', 'screens' => array( 'toplevel_page_messaging', 'inbox_page_messaging_new', 'inbox_page_messaging_sent', 'inbox_page_messaging_message-notifications' ) );
+include_once(plugin_dir_path( __FILE__ ).'lib/dash-notices/wpmudev-dash-notification.php');
+

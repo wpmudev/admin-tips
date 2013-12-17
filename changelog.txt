@@ -3,6 +3,11 @@ Authors: Ivan Shaovchev, Andrew Billits (Incsub)
 
 == Changelog ==
 
+= 1.0.7.3 =
+* WordPress 3.8 compatibility
+* Fixed: Dismiss cookie name
+* i18n improvements
+
 = 1.0.7.2 =
 * Fixed: Tips still showing when turned off in profile settings
 
