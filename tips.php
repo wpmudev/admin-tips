@@ -4,7 +4,7 @@ Plugin Name: Admin Panel Tips
 Plugin URI: http://premium.wpmudev.org/project/admin-panel-tips
 Description: Provide your users with helpful random tips (or promotions/news) in their admin panels.
 Author: Ivan Shaovchev & Andrew Billits (Incsub), S H Mohanjith (Incsub)
-Version: 1.0.7.3
+Version: 1.0.7.4
 Author URI: http://premium.wpmudev.org
 Network: true
 WDP ID: 61
@@ -46,7 +46,7 @@ if ( is_multisite() ) {
     add_action('admin_menu', 'tips_plug_pages');
 }
 
-$tips_current_version = '1.0.7.2';
+$tips_current_version = '1.0.7.4';
 $tmp_tips_prefix = "";
 $tmp_tips_suffix = "";
 
@@ -372,7 +372,7 @@ function tips_manage_output() {
                 </form>
 				<?php
 			} else {
-				$wpdb->query( "INSERT INTO " . $wpdb->base_prefix . "tips (tip_site_ID, tip_content, tip_added) VALUES ( '" . $current_site->id . "', '" . $_POST['tip_content'] . "' , '" . time() . "')" );
+				$wpdb->query( "INSERT INTO " . $wpdb->base_prefix . "tips (tip_site_ID, tip_content, tip_added, tip_status) VALUES ( '" . $current_site->id . "', '" . $_POST['tip_content'] . "' , '" . time() . "', '" . $_POST['tip_status'] . "')" );
 				echo "
 				<SCRIPT LANGUAGE='JavaScript'>
 				window.location='" . $tips_admin_url . "&updated=true&updatedmsg=" . urlencode(__('Tip Added!', TIPS_LANG_DOMAIN)) . "';
