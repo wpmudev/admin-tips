@@ -1,7 +1,11 @@
 === Admin Panel Tips ===
-Authors: Ivan Shaovchev, Andrew Billits (Incsub)
 
 == Changelog ==
+
+= 1.0.7.5 =
+* Fix: Tips still showing when turned off in profile settings in some setups
+* Fix: Make hide link actually turn off permanently in profile
+* Fix: Various code cleaning/compatibility
 
 = 1.0.7.4 =
 * Fixed: Tip is published even when I select the draft status

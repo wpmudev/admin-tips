@@ -1,17 +1,18 @@
 <?php
 /*
 Plugin Name: Admin Panel Tips
-Plugin URI: http://premium.wpmudev.org/project/admin-panel-tips
+Plugin URI: http://premium.wpmudev.org/project/admin-panel-tips/
 Description: Provide your users with helpful random tips (or promotions/news) in their admin panels.
-Author: Ivan Shaovchev & Andrew Billits (Incsub), S H Mohanjith (Incsub)
-Version: 1.0.7.4
-Author URI: http://premium.wpmudev.org
+Author: WPMU DEV
+Version: 1.0.7.5
+Author URI: http://premium.wpmudev.org/
 Network: true
 WDP ID: 61
-*/
 
-/* 
-Copyright 2007-2013 Incsub (http://incsub.com)
+
+Copyright 2007-2014 Incsub (http://incsub.com)
+Author - S H Mohanjith
+Contributors - Ivan Shaovchev, Andrew Billits, Aaron Edwards
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License (Version 2 - GPLv2) as published by
@@ -31,34 +32,24 @@ define('TIPS_LANG_DOMAIN', 'tips');
 
 /* Get admin page location */
 if ( is_multisite() ) {
-    if ( version_compare( $wp_version, '3.0.9', '>' ) ) {
-        $tips_menu_slug = 'settings.php';
-        $tips_admin_url = admin_url('network/settings.php?page=manage-tips');
-        add_action('network_admin_menu', 'tips_plug_pages');
-    } else {
-        $tips_menu_slug = 'ms-admin.php';
-        $tips_admin_url = admin_url('ms-admin.php?page=manage-tips');
-        add_action('admin_menu', 'tips_plug_pages');
-    }
+	$tips_menu_slug = 'settings.php';
+	$tips_admin_url = network_admin_url('settings.php?page=manage-tips');
+	add_action('network_admin_menu', 'tips_plug_pages');
 } else {
-    $tips_menu_slug = 'options-general.php';
-    $tips_admin_url = admin_url('options-general.php?page=manage-tips');
-    add_action('admin_menu', 'tips_plug_pages');
+	$tips_menu_slug = 'options-general.php';
+	$tips_admin_url = admin_url('options-general.php?page=manage-tips');
+	add_action('admin_menu', 'tips_plug_pages');
 }
 
-$tips_current_version = '1.0.7.4';
+$tips_current_version = '1.0.7.5';
 $tmp_tips_prefix = "";
 $tmp_tips_suffix = "";
 
 register_activation_hook(__FILE__, 'tips_make_current');
 
-//check for activating
-//if (isset($_GET['key']) && ($_GET['key'] == '' || $_GET['key'] === '')){
-//    add_action('admin_head', 'tips_make_current');
-//}
 if (!isset($_GET['updated']) || !isset($_GET['activated']) || ($_GET['updated'] != 'true' && $_GET['activated'] != 'true')){
-    add_action('admin_notices', 'tips_output');
-    add_action('network_admin_notices', 'tips_output');
+	add_action('admin_notices', 'tips_output');
+	//add_action('network_admin_notices', 'tips_output');
 }
 
 add_action('init', 'tips_global_init');
@@ -69,24 +60,25 @@ add_action('wp_ajax_tips_hide', 'tips_hide');
 add_action('admin_enqueue_scripts', 'tips_enqueue_scripts');
 
 function tips_dismiss() {
-    $tip_ids = isset($_COOKIE['tips_dismissed'])?maybe_unserialize(stripslashes($_COOKIE['tips_dismissed'])):array();
-    if (isset($_REQUEST['tid'])) {
-	$tip_ids[$_REQUEST['tid']] = $_REQUEST['tid'];
-    }
-    setcookie('tips_dismissed', serialize($tip_ids), time()+3600*24*365, admin_url('/'));
-    wp_safe_redirect(wp_get_referer());
-    exit();
+	$tip_ids = isset($_COOKIE['tips_dismissed']) ? maybe_unserialize( stripslashes( $_COOKIE['tips_dismissed'] )) : array();
+	if ( isset($_REQUEST['tid']) ) {
+		$tip_ids[$_REQUEST['tid']] = $_REQUEST['tid'];
+	}
+	setcookie('tips_dismissed', serialize($tip_ids), time()+3600*24*365, admin_url('/'));
+	wp_safe_redirect(wp_get_referer());
+	exit();
 }
 
 function tips_hide() {
-    $tip_ids = isset($_COOKIE['tips_hide'])?$_COOKIE['tips_hide']:false;
-    setcookie('tips_hide', true, time()+3600*24*365, admin_url('/'));
-    wp_safe_redirect(wp_get_referer());
-    exit();
+	global $current_user;
+	
+	update_user_meta($current_user->ID, 'show_tips', 'no');
+	wp_safe_redirect(wp_get_referer());
+	exit();
 }
 
 function tips_enqueue_scripts() {
-    wp_enqueue_script('jquery');
+  wp_enqueue_script('jquery');
 }
 
 function tips_make_current() {
@@ -162,10 +154,9 @@ function tips_global_install() {
 }
 
 function tips_plug_pages() {
-    global $tips_menu_slug;
-	if ( is_super_admin() ){
-		add_submenu_page( $tips_menu_slug, __('Tips', TIPS_LANG_DOMAIN), __('Tips', TIPS_LANG_DOMAIN), 'manage_options', 'manage-tips', 'tips_manage_output' );
-	}
+	global $tips_menu_slug;
+	
+	add_submenu_page( $tips_menu_slug, __('Tips', TIPS_LANG_DOMAIN), __('Tips', TIPS_LANG_DOMAIN), 'manage_network_options', 'manage-tips', 'tips_manage_output' );
 }
 
 function tips_profile_option_update() {
@@ -180,55 +171,58 @@ function tips_profile_option_update() {
 //------------------------------------------------------------------------//
 
 function tips_output() {
-	global $wpdb, $current_site, $tmp_tips_prefix, $tmp_tips_suffix, $user_id;
-	$show_tips = get_user_meta($user_id,'show_tips', true);
-	if ( $show_tips != 'no' && !isset($_COOKIE['tips_hide'])) {
-		$dismissed_tips = isset($_COOKIE['tips_dismissed'])?maybe_unserialize(stripslashes($_COOKIE['tips_dismissed'])):array();
-		if (count($dismissed_tips) > 0) {
-		    $dismissed_tips_sql = "AND tip_ID NOT IN(" . join(',', $dismissed_tips) . ")";
-		} else {
-		    $dismissed_tips_sql = "";
-		}
-		$tmp_tips_count = $wpdb->get_var("SELECT COUNT(*) FROM " . $wpdb->base_prefix . "tips WHERE tip_site_ID = '" . $current_site->id . "' AND tip_status = 1 {$dismissed_tips_sql} ");
-		if ($tmp_tips_count > 0){
-			$tmp_tip = $wpdb->get_row("SELECT tip_ID, tip_content FROM " . $wpdb->base_prefix . "tips WHERE tip_site_ID = '" . $current_site->id . "' AND tip_status = 1 {$dismissed_tips_sql} ORDER BY RAND() LIMIT 1");
-			$tmp_tip_content = $tmp_tips_prefix . $tmp_tip->tip_content . $tmp_tips_suffix;
-			?>
-			<div id="message" class="updated admin-panel-tips"><p class="apt-dismiss">[ <a href="<?php echo admin_url('admin-ajax.php'); ?>?action=tips_dismiss&tid=<?php echo $tmp_tip->tip_ID; ?>" ><?php _e('Dismiss', TIPS_LANG_DOMAIN); ?></a> ]</p> <p class="apt-hide">[ <a href="<?php echo admin_url('admin-ajax.php'); ?>?action=tips_hide&tid=<?php echo $tmp_tip->tip_ID; ?>" ><?php _e('Hide', TIPS_LANG_DOMAIN); ?></a> ]</p> <p class="apt-content"><?php echo $tmp_tip_content; ?></p></div>
-			<style type="text/css">
-			    .apt-dismiss, .apt-hide {
-				float: right;
-				font-size: 0.9em;
-			    }
-			</style>
-			<script type="text/javascript">
-			    jQuery(document).ready(function () {
-			        jQuery('p.apt-dismiss a').click(function () {
-				    var tips_dismiss_data = {
-					action: 'tips_dismiss',
-					tid: <?php echo $tmp_tip->tip_ID; ?>
-				    };
-				    jQuery('#message.admin-panel-tips p.apt-dismiss').html('<?php _e('Saving...', TIPS_LANG_DOMAIN); ?>');
-				    jQuery.post(ajaxurl, tips_dismiss_data, function(response) {
-					jQuery('#message.admin-panel-tips').hide();
-				    });
-				    return false;
+	global $wpdb, $current_site, $tmp_tips_prefix, $tmp_tips_suffix, $current_user;
+	
+	//hide if turned off
+	$show_tips = get_user_meta($current_user->ID,'show_tips', true);
+	if ( 'no' == $show_tips ) return;
+	
+
+	$dismissed_tips = isset($_COOKIE['tips_dismissed'])?maybe_unserialize(stripslashes($_COOKIE['tips_dismissed'])):array();
+	if (count($dismissed_tips) > 0) {
+			$dismissed_tips_sql = "AND tip_ID NOT IN(" . join(',', $dismissed_tips) . ")";
+	} else {
+			$dismissed_tips_sql = "";
+	}
+	$tmp_tips_count = $wpdb->get_var("SELECT COUNT(*) FROM " . $wpdb->base_prefix . "tips WHERE tip_site_ID = '" . $current_site->id . "' AND tip_status = 1 {$dismissed_tips_sql} ");
+	if ($tmp_tips_count > 0){
+		$tmp_tip = $wpdb->get_row("SELECT tip_ID, tip_content FROM " . $wpdb->base_prefix . "tips WHERE tip_site_ID = '" . $current_site->id . "' AND tip_status = 1 {$dismissed_tips_sql} ORDER BY RAND() LIMIT 1");
+		$tmp_tip_content = $tmp_tips_prefix . $tmp_tip->tip_content . $tmp_tips_suffix;
+		?>
+		<div id="message" class="updated admin-panel-tips"><p class="apt-dismiss">[ <a href="<?php echo admin_url('admin-ajax.php'); ?>?action=tips_dismiss&tid=<?php echo $tmp_tip->tip_ID; ?>" ><?php _e('Dismiss', TIPS_LANG_DOMAIN); ?></a> ]</p> <p class="apt-hide">[ <a href="<?php echo admin_url('admin-ajax.php'); ?>?action=tips_hide&tid=<?php echo $tmp_tip->tip_ID; ?>" ><?php _e('Hide', TIPS_LANG_DOMAIN); ?></a> ]</p> <p class="apt-content"><?php echo $tmp_tip_content; ?></p></div>
+		<style type="text/css">
+				.apt-dismiss, .apt-hide {
+			float: right;
+			font-size: 0.9em;
+				}
+		</style>
+		<script type="text/javascript">
+				jQuery(document).ready(function () {
+						jQuery('p.apt-dismiss a').click(function () {
+					var tips_dismiss_data = {
+				action: 'tips_dismiss',
+				tid: <?php echo $tmp_tip->tip_ID; ?>
+					};
+					jQuery('#message.admin-panel-tips p.apt-dismiss').html('<?php _e('Saving...', TIPS_LANG_DOMAIN); ?>');
+					jQuery.post(ajaxurl, tips_dismiss_data, function(response) {
+				jQuery('#message.admin-panel-tips').hide();
+					});
+					return false;
+			});
+			jQuery('p.apt-hide a').click(function () {
+					var tips_dismiss_data = {
+				action: 'tips_hide',
+				tid: <?php echo $tmp_tip->tip_ID; ?>
+					};
+					jQuery('#message.admin-panel-tips p.apt-hide').html('<?php _e('Saving...', TIPS_LANG_DOMAIN); ?>');
+					jQuery.post(ajaxurl, tips_dismiss_data, function(response) {
+				jQuery('#message.admin-panel-tips').hide();
+					});
+					return false;
+			});
 				});
-				jQuery('p.apt-hide a').click(function () {
-				    var tips_dismiss_data = {
-					action: 'tips_hide',
-					tid: <?php echo $tmp_tip->tip_ID; ?>
-				    };
-				    jQuery('#message.admin-panel-tips p.apt-hide').html('<?php _e('Saving...', TIPS_LANG_DOMAIN); ?>');
-				    jQuery.post(ajaxurl, tips_dismiss_data, function(response) {
-					jQuery('#message.admin-panel-tips').hide();
-				    });
-				    return false;
-				});
-			    });
-			</script>
-			<?php
-		}
+		</script>
+		<?php
 	}
 }
 
@@ -471,6 +465,5 @@ function tips_manage_output() {
  * Update Notifications Notice
  */
 global $wpmudev_notices;
-$wpmudev_notices[] = array( 'id'=> 61, 'name'=> 'Admin Panel Tips', 'screens' => array( 'settings_page_manage-tips-network' ) );
+$wpmudev_notices[] = array( 'id'=> 61, 'name'=> 'Admin Panel Tips', 'screens' => array( 'settings_page_manage-tips-network', 'settings_page_manage-tips' ) );
 include_once(plugin_dir_path( __FILE__ ).'external/dash-notice/wpmudev-dash-notification.php');
-
