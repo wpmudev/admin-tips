@@ -2,6 +2,9 @@
 
 == Changelog ==
 
+= 1.0.7.6 =
+* Tips not working in single
+
 = 1.0.7.5 =
 * Fix: Tips still showing when turned off in profile settings in some setups
 * Fix: Make hide link actually turn off permanently in profile

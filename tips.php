@@ -4,7 +4,7 @@ Plugin Name: Admin Panel Tips
 Plugin URI: http://premium.wpmudev.org/project/admin-panel-tips/
 Description: Provide your users with helpful random tips (or promotions/news) in their admin panels.
 Author: WPMU DEV
-Version: 1.0.7.5
+Version: 1.0.7.6
 Author URI: http://premium.wpmudev.org/
 Network: true
 WDP ID: 61
@@ -156,7 +156,8 @@ function tips_global_install() {
 function tips_plug_pages() {
 	global $tips_menu_slug;
 	
-	add_submenu_page( $tips_menu_slug, __('Tips', TIPS_LANG_DOMAIN), __('Tips', TIPS_LANG_DOMAIN), 'manage_network_options', 'manage-tips', 'tips_manage_output' );
+	if (is_super_admin())
+		add_submenu_page( $tips_menu_slug, __('Tips', TIPS_LANG_DOMAIN), __('Tips', TIPS_LANG_DOMAIN), 'manage_options', 'manage-tips', 'tips_manage_output' );
 }
 
 function tips_profile_option_update() {
