@@ -2,6 +2,9 @@
 
 == Changelog ==
 
+= 1.0.7.7 =
+* Fix: PHP error : Trying to get property of non-object
+
 = 1.0.7.6 =
 * Tips not working in single
 
