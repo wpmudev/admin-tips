@@ -185,9 +185,9 @@ function tips_output() {
 	} else {
 			$dismissed_tips_sql = "";
 	}
-	$tmp_tips_count = $wpdb->get_var("SELECT COUNT(*) FROM " . $wpdb->base_prefix . "tips WHERE tip_site_ID = '" . $current_site->id . "' AND tip_status = 1 {$dismissed_tips_sql} ");
+	$tmp_tips_count = $wpdb->get_var("SELECT COUNT(*) FROM " . $wpdb->base_prefix . "tips WHERE tip_site_ID = '" . $wpdb->siteid . "' AND tip_status = 1 {$dismissed_tips_sql} ");
 	if ($tmp_tips_count > 0){
-		$tmp_tip = $wpdb->get_row("SELECT tip_ID, tip_content FROM " . $wpdb->base_prefix . "tips WHERE tip_site_ID = '" . $current_site->id . "' AND tip_status = 1 {$dismissed_tips_sql} ORDER BY RAND() LIMIT 1");
+		$tmp_tip = $wpdb->get_row("SELECT tip_ID, tip_content FROM " . $wpdb->base_prefix . "tips WHERE tip_site_ID = '" . $wpdb->siteid . "' AND tip_status = 1 {$dismissed_tips_sql} ORDER BY RAND() LIMIT 1");
 		$tmp_tip_content = $tmp_tips_prefix . $tmp_tip->tip_content . $tmp_tips_suffix;
 		?>
 		<div id="message" class="updated admin-panel-tips"><p class="apt-dismiss">[ <a href="<?php echo admin_url('admin-ajax.php'); ?>?action=tips_dismiss&tid=<?php echo $tmp_tip->tip_ID; ?>" ><?php _e('Dismiss', TIPS_LANG_DOMAIN); ?></a> ]</p> <p class="apt-hide">[ <a href="<?php echo admin_url('admin-ajax.php'); ?>?action=tips_hide&tid=<?php echo $tmp_tip->tip_ID; ?>" ><?php _e('Hide', TIPS_LANG_DOMAIN); ?></a> ]</p> <p class="apt-content"><?php echo $tmp_tip_content; ?></p></div>
@@ -267,7 +267,7 @@ function tips_manage_output() {
 	switch( $_GET[ 'action' ] ) {
 		//---------------------------------------------------//
 		default:
-            $tmp_tips_count = $wpdb->get_var("SELECT COUNT(*) FROM " . $wpdb->base_prefix . "tips WHERE tip_site_ID = '" . $current_site->id . "'");
+            $tmp_tips_count = $wpdb->get_var("SELECT COUNT(*) FROM " . $wpdb->base_prefix . "tips WHERE tip_site_ID = '" . $wpdb->siteid . "'");
 			?>
 
             <h2><?php _e('Manage Tips', TIPS_LANG_DOMAIN) ?> (<a href="<?php echo $tips_admin_url; ?>&action=new_tip"><?php _e('New', TIPS_LANG_DOMAIN) ?></a>):</h2>
@@ -277,7 +277,7 @@ function tips_manage_output() {
             <p><?php _e('Click ', TIPS_LANG_DOMAIN) ?><a href="<?php echo $tips_admin_url; ?>&action=new_tip"><?php _e('here', TIPS_LANG_DOMAIN) ?></a><?php _e(' to add a new tip.', TIPS_LANG_DOMAIN) ?></p>
             <?php
 			} else {
-			$query = "SELECT tip_ID, tip_content, tip_added, tip_status FROM " . $wpdb->base_prefix . "tips WHERE tip_site_ID = '" . $current_site->id . "' ORDER BY tip_status, tip_ID DESC";
+			$query = "SELECT tip_ID, tip_content, tip_added, tip_status FROM " . $wpdb->base_prefix . "tips WHERE tip_site_ID = '" . $wpdb->siteid . "' ORDER BY tip_status, tip_ID DESC";
 			$tmp_tips = $wpdb->get_results( $query, ARRAY_A );
 			echo "
 			<table cellpadding='3' cellspacing='3' width='100%' class='widefat'> 
@@ -367,7 +367,7 @@ function tips_manage_output() {
                 </form>
 				<?php
 			} else {
-				$wpdb->query( "INSERT INTO " . $wpdb->base_prefix . "tips (tip_site_ID, tip_content, tip_added, tip_status) VALUES ( '" . $current_site->id . "', '" . $_POST['tip_content'] . "' , '" . time() . "', '" . $_POST['tip_status'] . "')" );
+				$wpdb->query( "INSERT INTO " . $wpdb->base_prefix . "tips (tip_site_ID, tip_content, tip_added, tip_status) VALUES ( '" . $wpdb->siteid . "', '" . $_POST['tip_content'] . "' , '" . time() . "', '" . $_POST['tip_status'] . "')" );
 				echo "
 				<SCRIPT LANGUAGE='JavaScript'>
 				window.location='" . $tips_admin_url . "&updated=true&updatedmsg=" . urlencode(__('Tip Added!', TIPS_LANG_DOMAIN)) . "';
@@ -377,7 +377,7 @@ function tips_manage_output() {
 		break;
 		//---------------------------------------------------//
 		case "edit_tip":
-			$tmp_tip = $wpdb->get_row("SELECT tip_content, tip_status FROM " . $wpdb->base_prefix . "tips WHERE tip_ID = '" . $_GET['tid'] . "' AND tip_site_ID = '" . $current_site->id . "'");
+			$tmp_tip = $wpdb->get_row("SELECT tip_content, tip_status FROM " . $wpdb->base_prefix . "tips WHERE tip_ID = '" . $_GET['tid'] . "' AND tip_site_ID = '" . $wpdb->siteid . "'");
 			?>
 			<h2><?php _e('Edit Tip', TIPS_LANG_DOMAIN) ?></h2>
             <form name="form1" method="POST" action="<?php echo $tips_admin_url; ?>&action=edit_tip_process">
@@ -403,7 +403,7 @@ function tips_manage_output() {
 		break;
 		//---------------------------------------------------//
 		case "edit_tip_process":
-			$tmp_tip_count = $wpdb->get_var("SELECT COUNT(*) FROM " . $wpdb->base_prefix . "tips WHERE tip_ID = '" . $_POST['tid'] . "' AND tip_site_ID = '" . $current_site->id . "'");
+			$tmp_tip_count = $wpdb->get_var("SELECT COUNT(*) FROM " . $wpdb->base_prefix . "tips WHERE tip_ID = '" . $_POST['tid'] . "' AND tip_site_ID = '" . $wpdb->siteid . "'");
 			if ($tmp_tip_count > 0){
 				if ($_POST['tip_content'] == ''){
 					?>
@@ -423,7 +423,7 @@ function tips_manage_output() {
 					</form>
 					<?php
 				} else {
-					$wpdb->query( "UPDATE " . $wpdb->base_prefix . "tips SET tip_content = '" . $_POST['tip_content'] . "', tip_status = " . $_POST['tip_status'] . " WHERE tip_ID = '" . $_POST['tid'] . "' AND tip_site_ID = '" . $current_site->id . "'" );
+					$wpdb->query( "UPDATE " . $wpdb->base_prefix . "tips SET tip_content = '" . $_POST['tip_content'] . "', tip_status = " . $_POST['tip_status'] . " WHERE tip_ID = '" . $_POST['tid'] . "' AND tip_site_ID = '" . $wpdb->siteid . "'" );
 					echo "
 					<SCRIPT LANGUAGE='JavaScript'>
 					window.location='" . $tips_admin_url . "&updated=true&updatedmsg=" . urlencode(__('Settings saved.', TIPS_LANG_DOMAIN)) . "';
@@ -433,7 +433,7 @@ function tips_manage_output() {
 			}
 		break;
 		case "unpublish_tip":
-				$wpdb->query( "UPDATE " . $wpdb->base_prefix . "tips SET tip_status = 0 WHERE tip_ID = '" . $_GET['tid'] . "' AND tip_site_ID = '" . $current_site->id . "'" );
+				$wpdb->query( "UPDATE " . $wpdb->base_prefix . "tips SET tip_status = 0 WHERE tip_ID = '" . $_GET['tid'] . "' AND tip_site_ID = '" . $wpdb->siteid . "'" );
 				echo "
 				<script type='text/javascript'>
 				window.location='" . $tips_admin_url . "&updated=true&updatedmsg=" . urlencode(__('Tip Un-published.', TIPS_LANG_DOMAIN)) . "';
@@ -441,7 +441,7 @@ function tips_manage_output() {
 				";
 		break;
 		case "publish_tip":
-				$wpdb->query( "UPDATE " . $wpdb->base_prefix . "tips SET tip_status = 1 WHERE tip_ID = '" . $_GET['tid'] . "' AND tip_site_ID = '" . $current_site->id . "'" );
+				$wpdb->query( "UPDATE " . $wpdb->base_prefix . "tips SET tip_status = 1 WHERE tip_ID = '" . $_GET['tid'] . "' AND tip_site_ID = '" . $wpdb->siteid . "'" );
 				echo "
 				<script type='text/javascript'>
 				window.location='" . $tips_admin_url . "&updated=true&updatedmsg=" . urlencode(__('Tip Published.', TIPS_LANG_DOMAIN)) . "';
@@ -450,7 +450,7 @@ function tips_manage_output() {
 		break;
 		//---------------------------------------------------//
 		case "delete_tip":
-				$wpdb->query( "DELETE FROM " . $wpdb->base_prefix . "tips WHERE tip_ID = '" . $_GET['tid'] . "' AND tip_site_ID = '" . $current_site->id . "'" );
+				$wpdb->query( "DELETE FROM " . $wpdb->base_prefix . "tips WHERE tip_ID = '" . $_GET['tid'] . "' AND tip_site_ID = '" . $wpdb->siteid . "'" );
 				echo "
 				<script type='text/javascript'>
 				window.location='" . $tips_admin_url . "&updated=true&updatedmsg=" . urlencode(__('Tip Removed.', TIPS_LANG_DOMAIN)) . "';
