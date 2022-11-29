@@ -4,7 +4,7 @@ Plugin Name: Admin Panel Tips
 Plugin URI: http://premium.wpmudev.org/project/admin-panel-tips/
 Description: Provide your users with helpful random tips (or promotions/news) in their admin panels.
 Author: WPMU DEV
-Version: 1.0.7.7
+Version: 1.0.8
 Author URI: http://premium.wpmudev.org/
 Network: true
 WDP ID: 61
@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 define('TIPS_LANG_DOMAIN', 'tips');
 
+
 /* Get admin page location */
 if ( is_multisite() ) {
 	$tips_menu_slug = 'settings.php';
@@ -41,13 +42,14 @@ if ( is_multisite() ) {
 	add_action('admin_menu', 'tips_plug_pages');
 }
 
-$tips_current_version = '1.0.7.7';
+global $tips_current_version;
+$tips_current_version = '1.0.8';
 $tmp_tips_prefix = "";
 $tmp_tips_suffix = "";
 
 register_activation_hook(__FILE__, 'tips_make_current');
 
-if (!isset($_GET['updated']) || !isset($_GET['activated']) || ($_GET['updated'] != 'true' && $_GET['activated'] != 'true')){
+if (!isset($_GET['updated']) || !isset($_GET['activated']) || ($_GET['updated'] != 'true' && $_GET['activated'] != 'true')) {
 	add_action('admin_notices', 'tips_output');
 	//add_action('network_admin_notices', 'tips_output');
 }
@@ -82,35 +84,18 @@ function tips_enqueue_scripts() {
 }
 
 function tips_make_current() {
-    global $wpdb, $tips_current_version;
-    if (get_site_option( "tips_version" ) == '') {
-    	add_site_option( 'tips_version', '0.0.0' );
-    }
-    tips_global_install();
-    if (get_site_option( "tips_version" ) == $tips_current_version) {
+    global  $tips_current_version;
+     
+    if (get_site_option( "tips_version" ) === $tips_current_version) {
     	// do nothing
     } else {
+	tips_global_install();
     	//update to current version
-    	// update_site_option( "tips_installed", "no" );
-    	update_site_option( "tips_version", $tips_current_version );
-    }
-    //--------------------------------------------------//
-    if (get_option( "tips_version" ) == '') {
-    	add_option( 'tips_version', '0.0.0' );
-    }
-    
-    if (get_option( "tips_version" ) == $tips_current_version) {
-    	// do nothing
-    } else {
-    	//update to current version
-    	update_option( "tips_version", $tips_current_version );
-    	tips_blog_install();
+    	
     }
 }
 
-function tips_blog_install() {
-    global $wpdb, $tips_current_version;
-}
+
 
 function tips_global_init() {
 	if (preg_match('/mu\-plugin/', PLUGINDIR) > 0) {
@@ -120,6 +105,13 @@ function tips_global_init() {
 	}
 }
 
+/**
+ * 
+ * @global type $wpdb
+ * @global string $tips_current_version
+ * 
+ * @version 2.0
+ */
 function tips_global_install() {
 	global $wpdb, $tips_current_version;
 	
@@ -129,12 +121,12 @@ function tips_global_install() {
 	if ( ! empty($wpdb->collate) )
 		$charset_collate .= " COLLATE $wpdb->collate";
 			
-	if (get_site_option( "tips_installed" ) == '') {
+	if (!(get_site_option( "tips_installed" ))) {
 		add_site_option( 'tips_installed', 'no' );
 	}
 	
 	if (get_site_option( "tips_installed" ) == "yes") {
-		if ( version_compare("1.0.4", get_site_option( "tips_version" )) >= 0) {
+		if ( version_compare('1.0.4', get_site_option( "tips_version" )) >= 0) {
 		    $tips_table1 = "ALTER TABLE `" . $wpdb->base_prefix . "tips` ADD `tip_status` INT( 1 ) NOT NULL DEFAULT '1' AFTER `tip_added` ;";
 		    $wpdb->query( $tips_table1 );
 		}
@@ -146,23 +138,35 @@ function tips_global_install() {
   `tip_added` varchar(255),
   `tip_status` int(1) NOT NULL default '1',
   PRIMARY KEY  (`tip_ID`)
-) ENGINE=MyISAM {$charset_collate};";
-
+)  {$charset_collate};";
 		$wpdb->query( $tips_table1 );
 		update_site_option( "tips_installed", "yes" );
+		update_site_option( "tips_version", $tips_current_version );
 	}
 }
 
+/**
+ * 
+ * @global type $tips_menu_slug
+ * @version 2.0
+ */
 function tips_plug_pages() {
 	global $tips_menu_slug;
 	
-	if (is_super_admin())
+	if (is_super_admin()) {
 		add_submenu_page( $tips_menu_slug, __('Tips', TIPS_LANG_DOMAIN), __('Tips', TIPS_LANG_DOMAIN), 'manage_options', 'manage-tips', 'tips_manage_output' );
+	}
 }
 
+/**
+ * 
+ * @global type $user_id
+ * 
+ * @version 2.0
+ */
 function tips_profile_option_update() {
 	global $user_id;
-	if ( $_POST['show_tips'] != '' ) {
+	if ( '' !== $_POST['show_tips'] ) {
 		update_user_meta($user_id, 'show_tips', $_POST['show_tips']);
 	}
 }
@@ -172,11 +176,13 @@ function tips_profile_option_update() {
 //------------------------------------------------------------------------//
 
 function tips_output() {
-	global $wpdb, $current_site, $tmp_tips_prefix, $tmp_tips_suffix, $current_user;
+	global $wpdb,  $tmp_tips_prefix, $tmp_tips_suffix, $current_user;
 	
 	//hide if turned off
 	$show_tips = get_user_meta($current_user->ID,'show_tips', true);
-	if ( 'no' == $show_tips ) return;
+	if ( 'no' === $show_tips ) {
+	    return;
+	}
 	
 
 	$dismissed_tips = isset($_COOKIE['tips_dismissed'])?maybe_unserialize(stripslashes($_COOKIE['tips_dismissed'])):array();
@@ -250,8 +256,16 @@ function tips_profile_option_output() {
 //---Page Output Functions------------------------------------------------//
 //------------------------------------------------------------------------//
 
+/**
+ * 
+ * @global type $wpdb
+ * @global type $tips_admin_url
+ * @return type
+ * 
+ * @version 2.0
+ */
 function tips_manage_output() {
-	global $wpdb, $wp_roles, $current_site, $tips_admin_url;
+	global $wpdb,  $tips_admin_url;
 	
 	if(!current_user_can('manage_options')) {
 		echo "<p>" . __('Nice Try...', TIPS_LANG_DOMAIN) . "</p>";  //If accessed properly, this message doesn't appear.
@@ -299,16 +313,16 @@ function tips_manage_output() {
 				echo "<tr class='" . $class . "'>";
 				echo "<td valign='top'>" . $tmp_tip['tip_content'] . "</td>";
 				echo "<td valign='top'>" . date_i18n(get_option('date_format') . ' ' . get_option('time_format'), $tmp_tip['tip_added']) . "</td>";
-				echo "<td valign='top'>" . (($tmp_tip['tip_status'] == 1)?__('Published', TIPS_LANG_DOMAIN):__('Draft', TIPS_LANG_DOMAIN)) . "</td>";
+				echo "<td valign='top'>" . ((1 === $tmp_tip['tip_status'] )?__('Published', TIPS_LANG_DOMAIN):__('Draft', TIPS_LANG_DOMAIN)) . "</td>";
 				echo '<td valign="top"><a href=' . $tips_admin_url . '&action=edit_tip&tid=' . $tmp_tip['tip_ID'] . " rel='permalink' class='edit'>" . __('Edit', TIPS_LANG_DOMAIN) . "</a></td>";
 				echo '<td valign="top"><a href=' . $tips_admin_url . '&action=delete_tip&tid=' . $tmp_tip['tip_ID'] . " rel='permalink' class='delete'>" . __('Remove', TIPS_LANG_DOMAIN) . "</a></td>";
-				if ($tmp_tip['tip_status'] == 1) {
+				if ( 1 === $tmp_tip['tip_status'] ) {
 				    echo '<td valign="top"><a href=' . $tips_admin_url . '&action=unpublish_tip&tid=' . $tmp_tip['tip_ID'] . " rel='permalink' class='delete'>" . __('Un-publish', TIPS_LANG_DOMAIN) . "</a></td>";
 				} else {
 				    echo '<td valign="top"><a href=' . $tips_admin_url . '&action=publish_tip&tid=' . $tmp_tip['tip_ID'] . " rel='permalink' class='delete'>" . __('Publish', TIPS_LANG_DOMAIN) . "</a></td>";
 				}
 				echo "</tr>";
-				$class = ('alternate' == $class) ? '' : 'alternate';
+				$class = ('alternate' === $class) ? '' : 'alternate';
 				//=========================================================//
 				}
 			}
@@ -344,7 +358,7 @@ function tips_manage_output() {
 		break;
 		//---------------------------------------------------//
 		case "new_tip_process":
-			if ($_POST['tip_content'] == ''){
+			if ( '' === $_POST['tip_content'] ){
 				?>
                 <h2><?php _e('New Tip', TIPS_LANG_DOMAIN) ?></h2>
                 <form name="form1" method="POST" action="<?php echo $tips_admin_url; ?>&action=new_tip_process">
@@ -405,7 +419,7 @@ function tips_manage_output() {
 		case "edit_tip_process":
 			$tmp_tip_count = $wpdb->get_var("SELECT COUNT(*) FROM " . $wpdb->base_prefix . "tips WHERE tip_ID = '" . $_POST['tid'] . "' AND tip_site_ID = '" . $wpdb->siteid . "'");
 			if ($tmp_tip_count > 0){
-				if ($_POST['tip_content'] == ''){
+				if ( '' === $_POST['tip_content'] ){
 					?>
 					<h2><?php _e('Edit Tip', TIPS_LANG_DOMAIN) ?></h2>
 					<form name="form1" method="POST" action="<?php echo $tips_admin_url; ?>&action=edit_tip_process">
@@ -461,3 +475,31 @@ function tips_manage_output() {
 	}
 	echo '</div>';
 }
+
+/**
+ * Add settings link on plugin page
+ * @param type $links
+ * @param type $file
+ * @return array
+ * 
+ * @since 1.0.8
+ */
+function tips_settings_link( $links, $file ) {
+	if (is_multisite()) {
+	    $location = 'settings.php'; 
+	}
+	else {
+	    $location = 'options-general.php';
+	}
+	return array_merge(
+			$links,
+			array(
+			    'settings' => '<a href="' . esc_url( add_query_arg( array( 'page' => 'manage-tips' ), $location ) ) . '">' . esc_html__( 'Settings', 'bp-group-documents' ) . '</a>',
+			)
+		);	
+
+}
+
+/// Add link to settings page
+add_filter( 'plugin_action_links_tips/tips.php', 'tips_settings_link', 10, 2 );
+add_filter( 'network_admin_plugin_action_links_tips/tips.php', 'tips_settings_link', 10, 2 );
