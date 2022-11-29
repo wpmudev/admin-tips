@@ -461,10 +461,3 @@ function tips_manage_output() {
 	}
 	echo '</div>';
 }
-
-/*
- * Update Notifications Notice
- */
-global $wpmudev_notices;
-$wpmudev_notices[] = array( 'id'=> 61, 'name'=> 'Admin Panel Tips', 'screens' => array( 'settings_page_manage-tips-network', 'settings_page_manage-tips' ) );
-include_once(plugin_dir_path( __FILE__ ).'external/dash-notice/wpmudev-dash-notification.php');
