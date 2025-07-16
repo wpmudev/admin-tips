@@ -4,7 +4,7 @@ Plugin Name: Admin Panel Tips
 Plugin URI: http://premium.wpmudev.org/project/admin-panel-tips/
 Description: Provide your users with helpful random tips (or promotions/news) in their admin panels.
 Author: WPMU DEV
-Version: 1.0.7.7
+Version: 1.0.8
 Author URI: http://premium.wpmudev.org/
 Network: true
 WDP ID: 61
@@ -41,6 +41,7 @@ if ( is_multisite() ) {
 	add_action('admin_menu', 'tips_plug_pages');
 }
 
+global $tips_current_version;
 $tips_current_version = '1.0.7.7';
 $tmp_tips_prefix = "";
 $tmp_tips_suffix = "";
@@ -83,15 +84,14 @@ function tips_enqueue_scripts() {
 
 function tips_make_current() {
     global $wpdb, $tips_current_version;
-    if (get_site_option( "tips_version" ) == '') {
+    if ( '' === get_site_option( "tips_version" )) {
     	add_site_option( 'tips_version', '0.0.0' );
     }
     tips_global_install();
-    if (get_site_option( "tips_version" ) == $tips_current_version) {
+    if (get_site_option( "tips_version" ) ===  $tips_current_version) {
     	// do nothing
     } else {
     	//update to current version
-    	// update_site_option( "tips_installed", "no" );
     	update_site_option( "tips_version", $tips_current_version );
     }
     //--------------------------------------------------//
@@ -99,7 +99,7 @@ function tips_make_current() {
     	add_option( 'tips_version', '0.0.0' );
     }
     
-    if (get_option( "tips_version" ) == $tips_current_version) {
+    if (get_option( "tips_version" ) === $tips_current_version) {
     	// do nothing
     } else {
     	//update to current version
@@ -176,7 +176,7 @@ function tips_output() {
 	
 	//hide if turned off
 	$show_tips = get_user_meta($current_user->ID,'show_tips', true);
-	if ( 'no' == $show_tips ) return;
+	if ( 'no' === $show_tips ) return;
 	
 
 	$dismissed_tips = isset($_COOKIE['tips_dismissed'])?maybe_unserialize(stripslashes($_COOKIE['tips_dismissed'])):array();
@@ -467,4 +467,3 @@ function tips_manage_output() {
  */
 global $wpmudev_notices;
 $wpmudev_notices[] = array( 'id'=> 61, 'name'=> 'Admin Panel Tips', 'screens' => array( 'settings_page_manage-tips-network', 'settings_page_manage-tips' ) );
-include_once(plugin_dir_path( __FILE__ ).'external/dash-notice/wpmudev-dash-notification.php');
