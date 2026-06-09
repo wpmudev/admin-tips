@@ -1,0 +1,186 @@
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: Admin Panel Tips\n"
+"POT-Creation-Date: 2026-06-09 14:05+0300\n"
+"PO-Revision-Date: 2026-06-09 14:09+0300\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.3\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: tips.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;"
+"esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;"
+"esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"Last-Translator: \n"
+"Language: el\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+
+#: tips.php:174 tips.php:256
+msgid "Tips"
+msgstr "Σύντομες συμβουλές"
+
+#: tips.php:215
+msgid "Dismiss"
+msgstr "Κλείσιμο"
+
+#: tips.php:215
+msgid "Hide"
+msgstr "Απόκρυψη"
+
+#: tips.php:229
+msgid "Saving..."
+msgstr "Γίνεται αποθήκευση..."
+
+#: tips.php:259
+msgid "Show Tips"
+msgstr "Εμφάνιση συμβουλών"
+
+#: tips.php:267
+msgid "Yes"
+msgstr "Ναι"
+
+#: tips.php:273
+msgid "No"
+msgstr "Όχι"
+
+#: tips.php:297
+msgid "Nice Try..."
+msgstr "Ωραία προσπάθεια..."
+
+#: tips.php:315
+msgid "Manage Tips"
+msgstr "Διαχείριση συμβουλών"
+
+#: tips.php:315
+msgid "New"
+msgstr "Νέα"
+
+#: tips.php:319
+msgid "Click "
+msgstr "Πατήστε "
+
+#: tips.php:319
+msgid "here"
+msgstr "εδώ"
+
+#: tips.php:319
+msgid " to add a new tip."
+msgstr " για να προσθέσετε μια νέα συμβουλή."
+
+#: tips.php:327
+msgid "Content"
+msgstr "Περιεχόμενο"
+
+#: tips.php:328
+msgid "Added"
+msgstr "Προστέθηκε"
+
+#: tips.php:329 tips.php:375 tips.php:400 tips.php:434
+msgid "Status"
+msgstr "Κατάσταση"
+
+#: tips.php:330
+msgid "Actions"
+msgstr "Ενέργειες"
+
+#: tips.php:344 tips.php:376 tips.php:401 tips.php:435
+msgid "Published"
+msgstr "Δημοσιευμένο"
+
+#: tips.php:344 tips.php:377 tips.php:402 tips.php:436
+msgid "Draft"
+msgstr "Πρόχειρο"
+
+#: tips.php:345
+msgid "Edit"
+msgstr "Επεξεργασία"
+
+#: tips.php:346
+msgid "Remove"
+msgstr "Διαγραφή"
+
+#: tips.php:348
+msgid "Un-publish"
+msgstr "Κατάργηση δημοσίευσης"
+
+#: tips.php:350
+msgid "Publish"
+msgstr "Δημοσίευση"
+
+#: tips.php:366 tips.php:391
+msgid "New Tip"
+msgstr "Νέα συμβουλή"
+
+#: tips.php:370
+msgid "Tip:"
+msgstr "Συμβουλή:"
+
+#: tips.php:382 tips.php:407
+msgid "Save"
+msgstr "Αποθήκευση"
+
+#: tips.php:395 tips.php:429 tips.php:457
+msgid "Tip"
+msgstr "Συμβουλή"
+
+#: tips.php:415
+msgid "Tip Added!"
+msgstr "Η συμβουλή προστέθηκε!"
+
+#: tips.php:424 tips.php:452
+msgid "Edit Tip"
+msgstr "Επεξεργασία συμβουλής"
+
+#: tips.php:441 tips.php:463
+msgid "Save Changes"
+msgstr "Αποθήκευση αλλαγών"
+
+#: tips.php:471
+msgid "Settings saved."
+msgstr "Ρυθμίσεις αποθηκεύτηκαν."
+
+#: tips.php:481
+msgid "Tip Un-published."
+msgstr "Έγινε κατάργηση δημοσίευσης."
+
+#: tips.php:489
+msgid "Tip Published."
+msgstr "Η συμβουλή δημοσιεύτηκε."
+
+#: tips.php:498
+msgid "Tip Removed."
+msgstr "Η συμβουλή διαγράφηκε."
+
+#: tips.php:524
+msgid "Settings"
+msgstr "Ρυθμίσεις"
+
+#. Plugin Name of the plugin/theme
+msgid "Admin Panel Tips"
+msgstr "Admin Panel Tips"
+
+#. Plugin URI of the plugin/theme
+msgid "https://github.com/lenasterg/admin-tips"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Provide your users with helpful random tips (or promotions/news) in their "
+"admin panels."
+msgstr ""
+"Παρέχετε στους χρήστες σας χρήσιμες τυχαίες συμβουλές (ή προσφορές/"
+"ειδήσεις) μέσα στον πίνακα ελέγχου."
+
+#. Author of the plugin/theme
+msgid "WPMU DEV"
+msgstr "WPMU DEV"
+
+#. Author URI of the plugin/theme
+msgid "http://premium.wpmudev.org/"
+msgstr ""

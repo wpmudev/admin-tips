@@ -1,151 +1,164 @@
-# Copyright (C) 2013 Admin Panel Tips
-# This file is distributed under the same license as the Admin Panel Tips package.
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Admin Panel Tips 1.0.7.3\n"
-"Report-Msgid-Bugs-To: http://wordpress.org/tag/tips\n"
-"POT-Creation-Date: 2013-12-17 19:05:03+00:00\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Project-Id-Version: Admin Panel Tips\n"
+"POT-Creation-Date: 2026-06-09 14:05+0300\n"
+"PO-Revision-Date: 2026-06-09 14:05+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2013-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: Poedit 2.4.3\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: tips.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
-#: tips.php:167 tips.php:239
+#: tips.php:174 tips.php:256
 msgid "Tips"
 msgstr ""
 
-#: tips.php:197
+#: tips.php:215
 msgid "Dismiss"
 msgstr ""
 
-#: tips.php:197
+#: tips.php:215
 msgid "Hide"
 msgstr ""
 
-#: tips.php:211 tips.php:222
+#: tips.php:229
 msgid "Saving..."
 msgstr ""
 
-#: tips.php:242
+#: tips.php:259
 msgid "Show Tips"
 msgstr ""
 
-#: tips.php:245
+#: tips.php:267
 msgid "Yes"
 msgstr ""
 
-#: tips.php:246
+#: tips.php:273
 msgid "No"
 msgstr ""
 
-#: tips.php:262
+#: tips.php:297
 msgid "Nice Try..."
 msgstr ""
 
-#: tips.php:278
+#: tips.php:315
 msgid "Manage Tips"
 msgstr ""
 
-#: tips.php:278
+#: tips.php:315
 msgid "New"
 msgstr ""
 
-#: tips.php:282
+#: tips.php:319
 msgid "Click "
 msgstr ""
 
-#: tips.php:282
+#: tips.php:319
 msgid "here"
 msgstr ""
 
-#: tips.php:282
+#: tips.php:319
 msgid " to add a new tip."
 msgstr ""
 
-#: tips.php:290
+#: tips.php:327
 msgid "Content"
 msgstr ""
 
-#: tips.php:291
+#: tips.php:328
 msgid "Added"
 msgstr ""
 
-#: tips.php:292 tips.php:338 tips.php:363 tips.php:397
+#: tips.php:329 tips.php:375 tips.php:400 tips.php:434
 msgid "Status"
 msgstr ""
 
-#: tips.php:293
+#: tips.php:330
 msgid "Actions"
 msgstr ""
 
-#: tips.php:307 tips.php:339 tips.php:364 tips.php:398
+#: tips.php:344 tips.php:376 tips.php:401 tips.php:435
 msgid "Published"
 msgstr ""
 
-#: tips.php:307 tips.php:340 tips.php:365 tips.php:399
+#: tips.php:344 tips.php:377 tips.php:402 tips.php:436
 msgid "Draft"
 msgstr ""
 
-#: tips.php:308
+#: tips.php:345
 msgid "Edit"
 msgstr ""
 
-#: tips.php:309
+#: tips.php:346
 msgid "Remove"
 msgstr ""
 
-#: tips.php:311
+#: tips.php:348
 msgid "Un-publish"
 msgstr ""
 
-#: tips.php:313
+#: tips.php:350
 msgid "Publish"
 msgstr ""
 
-#: tips.php:329 tips.php:354
+#: tips.php:366 tips.php:391
 msgid "New Tip"
 msgstr ""
 
-#: tips.php:333
+#: tips.php:370
 msgid "Tip:"
 msgstr ""
 
-#: tips.php:345 tips.php:370
+#: tips.php:382 tips.php:407
 msgid "Save"
 msgstr ""
 
-#: tips.php:358 tips.php:392 tips.php:420
+#: tips.php:395 tips.php:429 tips.php:457
 msgid "Tip"
 msgstr ""
 
-#: tips.php:378
+#: tips.php:415
 msgid "Tip Added!"
 msgstr ""
 
-#: tips.php:387 tips.php:415
+#: tips.php:424 tips.php:452
 msgid "Edit Tip"
 msgstr ""
 
-#: tips.php:404 tips.php:426
+#: tips.php:441 tips.php:463
 msgid "Save Changes"
 msgstr ""
 
-#: tips.php:434
+#: tips.php:471
 msgid "Settings saved."
 msgstr ""
 
-#: tips.php:444
+#: tips.php:481
 msgid "Tip Un-published."
 msgstr ""
 
-#: tips.php:452
+#: tips.php:489
 msgid "Tip Published."
 msgstr ""
 
-#: tips.php:461
+#: tips.php:498
 msgid "Tip Removed."
+msgstr ""
+
+#: tips.php:524
+msgid "Settings"
 msgstr ""
 
 #. Plugin Name of the plugin/theme
@@ -153,7 +166,7 @@ msgid "Admin Panel Tips"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
-msgid "http://premium.wpmudev.org/project/admin-panel-tips"
+msgid "https://github.com/lenasterg/admin-tips"
 msgstr ""
 
 #. Description of the plugin/theme
@@ -163,9 +176,9 @@ msgid ""
 msgstr ""
 
 #. Author of the plugin/theme
-msgid "Ivan Shaovchev & Andrew Billits (Incsub), S H Mohanjith (Incsub)"
+msgid "WPMU DEV"
 msgstr ""
 
 #. Author URI of the plugin/theme
-msgid "http://premium.wpmudev.org"
+msgid "http://premium.wpmudev.org/"
 msgstr ""
