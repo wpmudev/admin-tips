@@ -7,6 +7,7 @@
 * Fixed some bugs
 * Removed external folder
 * Removed sql.txt file
+* Added screenshots
 
 = 1.0.7.7 =
 * Fix: PHP error : Trying to get property of non-object

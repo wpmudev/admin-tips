@@ -343,12 +343,13 @@ function tips_manage_output() {
 						echo "<td valign='top'>" . date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $tmp_tip['tip_added'] ) . '</td>';
 						echo "<td valign='top'>" . ( ( '1' === $tmp_tip['tip_status'] ) ? esc_html__( 'Published', 'tips' ) : esc_html__( 'Draft', 'tips' ) ) . '</td>';
 						echo '<td valign="top"><a href=' . $tips_admin_url . '&action=edit_tip&tid=' . $tmp_tip['tip_ID'] . " rel='permalink' class='edit'>" . esc_html__( 'Edit', 'tips' ) . '</a></td>';
-						echo '<td valign="top"><a href=' . $tips_admin_url . '&action=delete_tip&tid=' . $tmp_tip['tip_ID'] . " rel='permalink' class='delete'>" . esc_html__( 'Remove', 'tips' ) . '</a></td>';
 						if ( '1' === $tmp_tip['tip_status'] ) {
-							echo '<td valign="top"><a href=' . $tips_admin_url . '&action=unpublish_tip&tid=' . $tmp_tip['tip_ID'] . " rel='permalink' class='delete'>" . esc_html__( 'Un-publish', 'tips' ) . '</a></td>';
+							echo '<td valign="top"><a href=' . $tips_admin_url . '&action=unpublish_tip&tid=' . $tmp_tip['tip_ID'] . " rel='permalink'>" . esc_html__( 'Un-publish', 'tips' ) . '</a></td>';
 						} else {
-							echo '<td valign="top"><a href=' . $tips_admin_url . '&action=publish_tip&tid=' . $tmp_tip['tip_ID'] . " rel='permalink' class='delete'>" . esc_html__( 'Publish', 'tips' ) . '</a></td>';
+							echo '<td valign="top"><a href=' . $tips_admin_url . '&action=publish_tip&tid=' . $tmp_tip['tip_ID'] . " rel='permalink'>" . esc_html__( 'Publish tip', 'tips' ) . '</a></td>';
 						}
+						echo '<td valign="top"><a href=' . $tips_admin_url . '&action=delete_tip&tid=' . $tmp_tip['tip_ID'] . " rel='permalink' class='delete'>" . esc_html__( 'Remove', 'tips' ) . '</a></td>';
+					
 						echo '</tr>';
 						$class = ( 'alternate' === $class ) ? '' : 'alternate';
 						//=========================================================//
