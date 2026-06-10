@@ -14,19 +14,19 @@ This plugin provides an effective way of sharing tips and tricks to all the re
 
 Simply visit the new 'Tips' tab under Settings in the network admin dashboard to enter in as many different tips, news, promotions or whatever you choose. Tips are fully HTML compatible and give you options to edit, add to, save as draft or delete later – so you maintain complete control. 
 
-![image](http://premium.wpmudev.org/wp-content/uploads/2009/03/tips61.jpg)
+![image](screenshot-1.png)
 
  Add tips from an easy-to-use interface
 
  As users navigate the dashboard, active tips display in a random order at the top of each page. 
 
-![image](http://premium.wpmudev.org/wp-content/uploads/2009/03/tips63.jpg)
+![image](screenshot-2.png)
 
  Clear list manager for quick control
 
  Give your users the choice – allow users to toggle tips display on their profile for a cleaner user experience. 
 
-![image](http://premium.wpmudev.org/wp-content/uploads/2009/03/tips62.jpg)
+![image](screenshot-3.png)
 
  Let users control if tips display
 
@@ -36,7 +36,7 @@ For a complete WordPress rebranding suite including the power of Admin Panel Tip
 
 ## Usage
 
-For help with installing plugins please refer to our [Plugin installation guide.](https://premium.wpmudev.org/wpmu-manual/installing-regular-plugins-on-wpmu/)
+For help with installing plugins please refer to our [Plugin installation guide.](https://wpmudev.com/docs/using-wordpress/installing-wordpress-plugins/#installing-mu-plugins)
 
 ### To Use:
 
@@ -50,8 +50,8 @@ For help with installing plugins please refer to our [Plugin installation guide.
 
 5\. Write your tip 
 
-![image](https://premium.wpmudev.org/wp-content/uploads/2009/03/tips61.jpg)
+![image](screenshot-1.png)
 
  6\. Click **Save Changes** 
 
-![image](https://premium.wpmudev.org/wp-content/uploads/2009/03/tips63.jpg)
+![image](screenshot-2.png)
